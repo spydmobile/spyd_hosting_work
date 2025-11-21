@@ -74,6 +74,44 @@ spyd.com  TXT  "v=spf1 +mx +a +ip4:216.108.149.0/24 +ip4:45.56.217.65/32 ~all"
 
 The VPS hosts multiple domains beyond spyd.com. Each requires separate DNS configuration when using external hosting (like GitHub Pages) while maintaining email on the VPS.
 
+## Security & Resource Management
+
+### Antivirus Configuration (November 2025)
+
+**Problem**: ClamAV causing Out of Memory (OOM) errors
+- VPS has 2GB RAM
+- ClamAV requires ~3GB RAM for continuous operation
+- OOM errors were causing service instability
+
+**Solution**: Replaced ClamAV with ImunifyAV
+- **Removed**: ClamAV (memory-intensive, incompatible with 2GB VPS)
+- **Installed**: ImunifyAV
+  - On-demand scanning (not continuous)
+  - Accessible via WHM
+  - Much smaller memory footprint
+  - Better suited for VPS environments
+
+**Benefits**:
+- No more OOM errors from antivirus
+- Memory freed for core services (web, mail, database)
+- Still have malware scanning when needed
+
+**Access**: ImunifyAV available in WHM for manual scans
+
+**Reference**: See issue #6 for details
+
+## VPS Resources
+
+**Specifications**:
+- RAM: 2GB
+- Provider: HostPapa
+
+**Resource Management Considerations**:
+- Avoid memory-intensive background services
+- Prefer on-demand over continuous scanning
+- Monitor memory usage for service stability
+- Consider resource requirements before installing new services
+
 ## Notes
 
 - DNS changes propagate immediately (verified working)
